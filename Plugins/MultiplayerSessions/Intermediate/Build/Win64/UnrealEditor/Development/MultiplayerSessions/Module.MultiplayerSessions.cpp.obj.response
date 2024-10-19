@@ -1,6 +1,6 @@
-"C:\Users\akfh9\Desktop\Main gamedev\Blaster\Plugins\MultiplayerSessions\Intermediate\Build\Win64\UnrealEditor\Development\MultiplayerSessions\Module.MultiplayerSessions.cpp"
+C:\Users\akfh9\Desktop\Blaster\Plugins\MultiplayerSessions\Intermediate\Build\Win64\UnrealEditor\Development\MultiplayerSessions\Module.MultiplayerSessions.cpp
 /I .
-/I "C:\Users\akfh9\Desktop\Main gamedev\Blaster\Plugins\MultiplayerSessions\Source\MultiplayerSessions\Private"
+/I C:\Users\akfh9\Desktop\Blaster\Plugins\MultiplayerSessions\Source\MultiplayerSessions\Private
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\CoreUObject
 /I Runtime
 /I Runtime\CoreUObject\Public
@@ -252,9 +252,9 @@
 /I Runtime\ClothingSystemRuntimeInterface\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\AnimationDataController
 /I Developer\AnimationDataController\Public
-/I "C:\Users\akfh9\Desktop\Main gamedev\Blaster\Plugins\MultiplayerSessions\Intermediate\Build\Win64\UnrealEditor\Inc\MultiplayerSessions"
-/I "C:\Users\akfh9\Desktop\Main gamedev\Blaster\Plugins\MultiplayerSessions\Source"
-/I "C:\Users\akfh9\Desktop\Main gamedev\Blaster\Plugins\MultiplayerSessions\Source\MultiplayerSessions\Public"
+/I C:\Users\akfh9\Desktop\Blaster\Plugins\MultiplayerSessions\Intermediate\Build\Win64\UnrealEditor\Inc\MultiplayerSessions
+/I C:\Users\akfh9\Desktop\Blaster\Plugins\MultiplayerSessions\Source
+/I C:\Users\akfh9\Desktop\Blaster\Plugins\MultiplayerSessions\Source\MultiplayerSessions\Public
 /I ..\Plugins\Online\OnlineSubsystem\Intermediate\Build\Win64\UnrealEditor\Inc\OnlineSubsystem
 /I ..\Plugins\Online\OnlineSubsystem
 /I ..\Plugins\Online\OnlineSubsystem\Source
@@ -289,12 +289,12 @@
 /I "C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\shared"
 /I "C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\um"
 /I "C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\winrt"
-/FI"C:\Users\akfh9\Desktop\Main gamedev\Blaster\Intermediate\Build\Win64\BlasterEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
-/FI"C:\Users\akfh9\Desktop\Main gamedev\Blaster\Plugins\MultiplayerSessions\Intermediate\Build\Win64\UnrealEditor\Development\MultiplayerSessions\Definitions.MultiplayerSessions.h"
-/Yu"C:\Users\akfh9\Desktop\Main gamedev\Blaster\Intermediate\Build\Win64\BlasterEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
-/Fp"C:\Users\akfh9\Desktop\Main gamedev\Blaster\Intermediate\Build\Win64\BlasterEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.pch"
-/Fo"C:\Users\akfh9\Desktop\Main gamedev\Blaster\Plugins\MultiplayerSessions\Intermediate\Build\Win64\UnrealEditor\Development\MultiplayerSessions\Module.MultiplayerSessions.cpp.obj"
-/sourceDependencies "C:\Users\akfh9\Desktop\Main gamedev\Blaster\Plugins\MultiplayerSessions\Intermediate\Build\Win64\UnrealEditor\Development\MultiplayerSessions\Module.MultiplayerSessions.cpp.json"
+/FI"C:\Users\akfh9\Desktop\Blaster\Intermediate\Build\Win64\BlasterEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
+/FI"C:\Users\akfh9\Desktop\Blaster\Plugins\MultiplayerSessions\Intermediate\Build\Win64\UnrealEditor\Development\MultiplayerSessions\Definitions.MultiplayerSessions.h"
+/Yu"C:\Users\akfh9\Desktop\Blaster\Intermediate\Build\Win64\BlasterEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
+/Fp"C:\Users\akfh9\Desktop\Blaster\Intermediate\Build\Win64\BlasterEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.pch"
+/Fo"C:\Users\akfh9\Desktop\Blaster\Plugins\MultiplayerSessions\Intermediate\Build\Win64\UnrealEditor\Development\MultiplayerSessions\Module.MultiplayerSessions.cpp.obj"
+/sourceDependencies C:\Users\akfh9\Desktop\Blaster\Plugins\MultiplayerSessions\Intermediate\Build\Win64\UnrealEditor\Development\MultiplayerSessions\Module.MultiplayerSessions.cpp.json
 /Zc:inline
 /nologo
 /Oi

@@ -133,21 +133,28 @@ private:
 
 	void ElimTimerFinished();
 
-/// <summary>
-/// Dissolved effect
-/// </summary>
+	/// <summary>
+	/// Dissolved effect
+	/// </summary>
 
 	UPROPERTY(VisibleAnywhere)
 	UTimelineComponent* DissolveTimeline;
 	FOnTimelineFloat DissolveTrack;
+
 
 	UPROPERTY(EditAnywhere)
 	UCurveFloat* DissolveCurve;
 
 	UFUNCTION()
 	void UpdateDissolveMaterial(float DissolveValue);
-
 	void StartDissolve();
+
+	// Dynamic instance that we can change at runtime
+	UPROPERTY(VisibleAnywhere, Category = Elim)
+	UMaterialInstanceDynamic* DynamicDissolveMaterialInstance;
+	// Material instance set on the Blueprint, used with the dynamic material instance
+	UPROPERTY(EditAnywhere, Category = Elim)
+	UMaterialInstance* DissolveMaterialInstance;
 
 public:
 	//simple getters and setters
