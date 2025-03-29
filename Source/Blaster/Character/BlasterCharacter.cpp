@@ -95,6 +95,7 @@ void ABlasterCharacter::MulticastElim_Implementation()
 	bElimmed = true;
 	PlayElimMontage();
 
+	UE_LOG(LogTemp, Warning, TEXT("dissolving material"));
 	if (DissolveMaterialInstance)
 	{
 		DynamicDissolveMaterialInstance = UMaterialInstanceDynamic::Create(DissolveMaterialInstance, this);
@@ -535,11 +536,10 @@ void ABlasterCharacter::UpdateDissolveMaterial(float DissolveValue)
 void ABlasterCharacter::StartDissolve()
 {
 	DissolveTrack.BindDynamic(this, &ABlasterCharacter::UpdateDissolveMaterial);
-
-	if (DissolveCurve)
+	if (DissolveCurve && DissolveTimeline)
 	{
 		DissolveTimeline->AddInterpFloat(DissolveCurve, DissolveTrack);
-		DissolveTimeline->Play(); //start dissolve effect
+		DissolveTimeline->Play();
 	}
 }
 
