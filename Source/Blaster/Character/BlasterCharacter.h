@@ -29,6 +29,8 @@ public:
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastElim(); //handle player eliminations
 
+	virtual void Destroyed() override;
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -141,12 +143,15 @@ private:
 	UTimelineComponent* DissolveTimeline;
 	FOnTimelineFloat DissolveTrack;
 
+	float initialDissolveValue = 0.5f;
+
 
 	UPROPERTY(EditAnywhere)
 	UCurveFloat* DissolveCurve;
 
 	UFUNCTION()
 	void UpdateDissolveMaterial(float DissolveValue);
+	
 	void StartDissolve();
 
 	// Dynamic instance that we can change at runtime
@@ -157,6 +162,18 @@ private:
 	// Material instance set on the Blueprint, used with the dynamic material instance
 	UPROPERTY(EditAnywhere, Category = Elim)
 	UMaterialInstance* DissolveMaterialInstance;
+
+	/*
+	 * Elim bot
+	 */
+	UPROPERTY(EditAnywhere)
+	UParticleSystem* ElimBotEffect;
+
+	UPROPERTY(VisibleAnywhere)
+	UParticleSystemComponent* ElimBotComponent;
+
+	UPROPERTY(EditAnywhere)
+	class USoundCue* ElimBotSound;
 
 public:
 	//simple getters and setters
