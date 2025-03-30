@@ -1,0 +1,5 @@
+*.sln
+Intermediate/
+Binaries/
+.vs/
+Saved/s
