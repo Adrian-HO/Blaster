@@ -53,6 +53,8 @@ protected:
 	UFUNCTION()
 	void RecieveDamage(AActor* DamageActor, float Damage, const UDamageType* DamageType, class AController* InstigatorController, AActor* DamageCauser);
 	void UpdateHUDHealth();
+	//POll for any Relevant classes and initializes our HUD
+	void PollInit();
 
 private:
 	//spring arm and camera
@@ -174,6 +176,8 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	class USoundCue* ElimBotSound;
+
+	class ABlasterPlayerState* BlasterPlayerState;
 
 public:
 	//simple getters and setters

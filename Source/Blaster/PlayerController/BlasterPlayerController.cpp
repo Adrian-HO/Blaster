@@ -29,6 +29,7 @@ void ABlasterPlayerController::OnPossess(APawn* InPawn)
 
 void ABlasterPlayerController::SetHUDHealth(float Health, float MaxHealth)
 {
+	//get blaster hud variable
 	BlasterHUD = BlasterHUD == nullptr ? BlasterHUD = Cast<ABlasterHUD>(GetHUD()) : BlasterHUD;
 
 	bool bHUDValid = BlasterHUD && 
@@ -42,6 +43,21 @@ void ABlasterPlayerController::SetHUDHealth(float Health, float MaxHealth)
 		BlasterHUD->CharacterOverlay->HealthBar->SetPercent(HealthPercent);
 		FString HealthText = FString::Printf(TEXT("%d/%d"), FMath::CeilToInt(Health), FMath::CeilToInt(MaxHealth));
 		BlasterHUD->CharacterOverlay->HealthText->SetText(FText::FromString(HealthText));
+	}
+}
+
+void ABlasterPlayerController::SetHUDScore(float Score)
+{
+	//get blaster hud variable
+	BlasterHUD = BlasterHUD == nullptr ? BlasterHUD = Cast<ABlasterHUD>(GetHUD()) : BlasterHUD;
+	
+	bool bHUDValid = BlasterHUD && 
+		BlasterHUD->CharacterOverlay && 
+		BlasterHUD->CharacterOverlay->ScoreAmount;
+	if (bHUDValid)
+	{
+		FString ScoreText = FString::Printf(TEXT("%d"), FMath::FloorToInt(Score));
+		BlasterHUD->CharacterOverlay->ScoreAmount->SetText(FText::FromString(ScoreText));
 	}
 }
 
