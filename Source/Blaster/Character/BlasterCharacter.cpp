@@ -597,6 +597,7 @@ void ABlasterCharacter::PollInit()
 		{
 			//set state in hud
 			BlasterPlayerState->AddToScore(0.f);
+			BlasterPlayerState->AddToDefeats(0);
 		}
 	}
 }

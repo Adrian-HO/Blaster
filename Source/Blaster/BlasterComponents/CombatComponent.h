@@ -25,7 +25,7 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
-	void SetAiming(bool bIsAiing);
+	void SetAiming(bool bIsAiming);
 
 	UFUNCTION(Server, Reliable)
 	void ServerSetAiming(bool bIsAiming);
@@ -50,8 +50,11 @@ protected:
 	float ChangeFloatOverTime(float StartValue, float TargetValue, float CurrentValue, float TimeToComplete, float DeltaTime);
 
 private:
+	UPROPERTY()
 	class ABlasterCharacter* Character;
+	UPROPERTY()
 	class ABlasterPlayerController* Controller;
+	UPROPERTY()
 	class ABlasterHUD* HUD;
 
 	UPROPERTY(ReplicatedUsing = OnRep_EquippedWeapon)
