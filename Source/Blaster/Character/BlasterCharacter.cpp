@@ -110,6 +110,10 @@ void ABlasterCharacter::Elim()
 
 void ABlasterCharacter::MulticastElim_Implementation()
 {
+	if (BlasterPlayerController)
+	{
+		BlasterPlayerController->SetHUDWeaponAmmo(0);
+	}
 	bElimmed = true;
 	PlayElimMontage();
 

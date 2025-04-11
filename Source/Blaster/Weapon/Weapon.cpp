@@ -70,6 +70,8 @@ void AWeapon::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeP
 	DOREPLIFETIME(AWeapon, Ammo);
 }
 
+
+
 void AWeapon::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	ABlasterCharacter* BlasterCharacter = Cast<ABlasterCharacter>(OtherActor);
@@ -88,34 +90,45 @@ void AWeapon::OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActo
 	}
 }
 
-
-void AWeapon::SpendRound()
+void AWeapon::SetHUDAmmo()
 {
-	Ammo--;
 	BlasterOwnerCharacter = BlasterOwnerCharacter == nullptr ? Cast<ABlasterCharacter>(GetOwner()) : BlasterOwnerCharacter;
 	if (BlasterOwnerCharacter)
 	{
-		BlasterOwnerController = BlasterOwnerCharacter == nullptr ? Cast<ABlasterPlayerController>(BlasterOwnerCharacter->Controller) : BlasterOwnerController;
+		BlasterOwnerController = BlasterOwnerController == nullptr ? Cast<ABlasterPlayerController>(BlasterOwnerCharacter->Controller) : BlasterOwnerController;
 		if (BlasterOwnerController)
 		{
 			BlasterOwnerController->SetHUDWeaponAmmo(Ammo);
 		}
 	}
+}
+
+void AWeapon::SpendRound()
+{
+	Ammo = FMath::Clamp(Ammo - 1, 0, MagCapacity);
+	SetHUDAmmo();
 }
 
 void AWeapon::OnRep_Ammo()
 {
-	Ammo--;
 	BlasterOwnerCharacter = BlasterOwnerCharacter == nullptr ? Cast<ABlasterCharacter>(GetOwner()) : BlasterOwnerCharacter;
-	if (BlasterOwnerCharacter)
+	SetHUDAmmo();
+}
+
+void AWeapon::OnRep_Owner()
+{
+	Super::OnRep_Owner();
+	if (Owner == nullptr)
 	{
-		BlasterOwnerController = BlasterOwnerCharacter == nullptr ? Cast<ABlasterPlayerController>(BlasterOwnerCharacter->Controller) : BlasterOwnerController;
-		if (BlasterOwnerController)
-		{
-			BlasterOwnerController->SetHUDWeaponAmmo(Ammo);
-		}
+		BlasterOwnerCharacter = nullptr;
+		BlasterOwnerController = nullptr;
+	}
+	else
+	{
+		SetHUDAmmo();
 	}
 }
+
 
 void AWeapon::SetWeaponState(EWeaponState State)
 { 
@@ -175,11 +188,13 @@ void AWeapon::ShowPickupWidget(bool bShowWidget)
 
 void AWeapon::Fire(const FVector& HitTarget)
 {
+	//do fire animation
 	if (FireAnimation)
 	{
 		WeaponMesh->PlayAnimation(FireAnimation, false);
 	}
 
+	//spawn fire casing
 	if (CasingClass)
 	{
 		const USkeletalMeshSocket* AmmoEjectSocket = WeaponMesh->GetSocketByName(FName("AmmoEject"));
@@ -203,6 +218,8 @@ void AWeapon::Fire(const FVector& HitTarget)
 			}
 		}
 	}
+	//spend amm round
+	SpendRound();
 }
 
 void AWeapon::Dropped()
@@ -211,5 +228,12 @@ void AWeapon::Dropped()
 	FDetachmentTransformRules DetachRules(EDetachmentRule::KeepWorld, true);
 	WeaponMesh->DetachFromComponent(DetachRules);
 	SetOwner(nullptr);
+
+	BlasterOwnerCharacter = nullptr;
+	BlasterOwnerController = nullptr;
 }
 
+bool AWeapon::IsEmpty()
+{
+	return Ammo <= 0;
+}
