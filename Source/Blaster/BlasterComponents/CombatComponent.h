@@ -57,6 +57,7 @@ protected:
 	void ServerReload();
 
 	void HandleReload();
+	int32 AmountToReload();
 
 	float ChangeFloatOverTime(float StartValue, float TargetValue, float CurrentValue, float TimeToComplete, float DeltaTime);
 
@@ -149,4 +150,6 @@ private:
 
 	UFUNCTION()
 	void OnRep_CombatState();
+
+	void UpdateAmmoValues();
 };
