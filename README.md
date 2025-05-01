@@ -1,0 +1,1 @@
+important: make you are signed into steam and have it running first on your pc before starting build. everything else should be straight forward. 
