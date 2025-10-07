@@ -30,8 +30,10 @@ public:
 	void Elim();
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastElim(); //handle player eliminations
-
 	virtual void Destroyed() override;
+
+	UPROPERTY(Replicated)
+	bool bDisableGameplay = false;
 
 protected:
 	virtual void BeginPlay() override;
@@ -58,6 +60,8 @@ protected:
 	void UpdateHUDHealth();
 	//POll for any Relevant classes and initializes our HUD
 	void PollInit();
+
+	void RotateInPlace(float DeltaTime);
 
 private:
 	//spring arm and camera
@@ -205,5 +209,7 @@ public:
 	FORCEINLINE float GetHealth() const { return Health; }
 	FORCEINLINE float GetMaxHealth() const { return MaxHealth; }
 	ECombatState GetCombatState() const;
+	FORCEINLINE UCombatComponent* GetCombat() const { return Combat; }
+	FORCEINLINE bool GetDisableGameplay() const { return bDisableGameplay; }
 	
 };
