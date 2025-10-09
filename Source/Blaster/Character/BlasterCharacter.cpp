@@ -129,13 +129,16 @@ void ABlasterCharacter::MulticastElim_Implementation()
 	}
 	StartDissolve();
 
+	//Disable character movement
+	bDisableGameplay = true;
+
+	//prevent character from falling through floor when killed
+	GetCharacterMovement()->DisableMovement();
+	
 	if (Combat)
 	{
 		Combat->FireButtonPressed(false);
 	}
-	
-	//Disable character movement
-	bDisableGameplay = true;
 	
 	//Disable collision
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
