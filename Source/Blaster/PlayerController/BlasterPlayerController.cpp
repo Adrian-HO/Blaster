@@ -383,7 +383,7 @@ void ABlasterPlayerController::HandleCooldown()
 				{
 					InfoTextString = FString::Printf(TEXT("Winner: \n%s"), *TopPlayers[0]->GetPlayerName());
 				}
-				//mult winners
+				//if multiple winners
 				{
 					InfoTextString = FString("Players tied for the win:\n");
 					for (auto TiedPlayer : TopPlayers)
