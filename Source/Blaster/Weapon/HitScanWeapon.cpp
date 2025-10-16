@@ -5,6 +5,7 @@
 #include "Engine/SkeletalMeshSocket.h"
 #include "Blaster/Character/BlasterCharacter.h"
 #include "Kismet/GameplayStatics.h"
+#include "particles/ParticleSystemComponent.h"
 
 void AHitScanWeapon::Fire(const FVector& HitTarget)
 {
@@ -13,11 +14,13 @@ void AHitScanWeapon::Fire(const FVector& HitTarget)
 	APawn* OwnerPawn = Cast<APawn>(GetOwner());
 	if (Owner == nullptr) return;
 	AController* InstigatorController = OwnerPawn->GetController();
+	//check for networking something about not having authority n instigator
+	//if (!HasAuthority()&& InstigatorController) UE_LOG(LogTemp, Warning, TEXT("Instigator valid"))
 	
 	//to get the skeletal mesh socket  N make a const use skeletal mesh socket
 	const USkeletalMeshSocket* MuzzleFlashSocket = GetWeaponMesh()->GetSocketByName("MuzzleFlash");
 	//check if muszzle flash socket is valid
-	if (MuzzleFlashSocket && InstigatorController)
+	if (MuzzleFlashSocket)
 	{
 		//get transform of socket by passing in the weapon mesh
 		FTransform SocketTransform = MuzzleFlashSocket->GetSocketTransform(GetWeaponMesh());
@@ -37,23 +40,25 @@ void AHitScanWeapon::Fire(const FVector& HitTarget)
 				ECollisionChannel::ECC_Visibility
 			);
 
+			//Set at end of line trace
+			FVector BeamEnd = End;
+			
 			//check if got blocking hit
 			if (FireHit.bBlockingHit)
 			{
+				//set beam end tothe impact point of that blocking hit
+				BeamEnd = FireHit.ImpactPoint;
 				ABlasterCharacter* BlasterCharacter = Cast<ABlasterCharacter>(FireHit.GetActor());
-				if (BlasterCharacter)
+				if (BlasterCharacter && HasAuthority() && InstigatorController)
 				{
-					if (HasAuthority())
-					{
-						//float Damage;
-						UGameplayStatics::ApplyDamage(
-						 BlasterCharacter, //reqires a damage actor
-						 Damage, //base damage amount
-						 InstigatorController, //instigator
-						 this,//damage causer
-						 UDamageType::StaticClass()//damage type
-						 );
-					}
+					//float Damage;
+					UGameplayStatics::ApplyDamage(
+						BlasterCharacter, //reqires a damage actor
+						Damage, //base damage amount
+						InstigatorController, //instigator
+						this,//damage causer
+						UDamageType::StaticClass()//damage type
+					);
 				}
 				
 				if (ImpactParticles)
@@ -63,7 +68,22 @@ void AHitScanWeapon::Fire(const FVector& HitTarget)
 						ImpactParticles, //particle system
 						FireHit.ImpactPoint, //end location which is the linetrace
 						FireHit.ImpactNormal.Rotation()//rotation
-						);
+					);
+				}
+
+				//spawn particles
+				if (BeamParticles)
+				{
+					UParticleSystemComponent* Beam = UGameplayStatics::SpawnEmitterAtLocation(
+						World,
+						BeamParticles,
+						SocketTransform //determine starting point of the beam
+					);
+						//set endpoint
+					if (Beam)
+					{
+						Beam->SetVectorParameter(FName("Target"), BeamEnd);
+					}
 				}
 			}
 		}
