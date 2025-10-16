@@ -6,13 +6,14 @@
 #include "Blaster/Character/BlasterCharacter.h"
 #include "Kismet/GameplayStatics.h"
 #include "particles/ParticleSystemComponent.h"
+#include "Sound/SoundCue.h"
 
 void AHitScanWeapon::Fire(const FVector& HitTarget)
 {
 	Super::Fire(HitTarget);
 
 	APawn* OwnerPawn = Cast<APawn>(GetOwner());
-	if (Owner == nullptr) return;
+	if (OwnerPawn == nullptr) return;
 	AController* InstigatorController = OwnerPawn->GetController();
 	//check for networking something about not having authority n instigator
 	//if (!HasAuthority()&& InstigatorController) UE_LOG(LogTemp, Warning, TEXT("Instigator valid"))
@@ -70,22 +71,46 @@ void AHitScanWeapon::Fire(const FVector& HitTarget)
 						FireHit.ImpactNormal.Rotation()//rotation
 					);
 				}
-
-				//spawn particles
-				if (BeamParticles)
+				if (HitSound)
 				{
-					UParticleSystemComponent* Beam = UGameplayStatics::SpawnEmitterAtLocation(
-						World,
-						BeamParticles,
-						SocketTransform //determine starting point of the beam
+					UGameplayStatics::PlaySoundAtLocation(
+						this,
+						HitSound,
+						FireHit.ImpactPoint
 					);
-						//set endpoint
-					if (Beam)
-					{
-						Beam->SetVectorParameter(FName("Target"), BeamEnd);
-					}
 				}
 			}
+			//spawn particles
+			if (BeamParticles)
+			{
+				UParticleSystemComponent* Beam = UGameplayStatics::SpawnEmitterAtLocation(
+					World,
+					BeamParticles,
+					SocketTransform //determine starting point of the beam
+				);
+				
+				//set endpoint
+				if (Beam)
+				{
+					Beam->SetVectorParameter(FName("Target"), BeamEnd);
+				}
+			}
+		}
+		if (MuzzleFlashSocket)
+		{
+			UGameplayStatics::SpawnEmitterAtLocation(
+				World,
+				MuzzleFlash,
+				SocketTransform
+			);
+		}
+		if (FireSound)
+		{
+			UGameplayStatics::PlaySoundAtLocation(
+				this,
+				FireSound,
+				GetActorLocation()
+			);
 		}
 	}
 }
